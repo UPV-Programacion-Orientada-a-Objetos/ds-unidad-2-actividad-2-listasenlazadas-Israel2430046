@@ -2,19 +2,32 @@
 #include <fstream>
 #include <cstring>
 
+/**
+ * @struct NodoCarga
+ * @brief Nodo de la lista doblemente enlazada que guarda un caracter.
+ *
+ */
 struct NodoCarga {
-    char dato;
+    char dato;           
     NodoCarga* siguiente;
-    NodoCarga* anterior;
+    NodoCarga* anterior; 
 };
 
+/**
+ * @class Listacargada
+ * @brief Lista doblemente enlazada para guardar el mensaje decodificado.
+ *
+ * Provee insercion al final y metodo para imprimir el mensaje actual. */
 class Listacargada {
 private:
     NodoCarga* cabeza;
     NodoCarga* cola;
 public:
     Listacargada() : cabeza(nullptr), cola(nullptr) {}
-
+    /**
+     * @brief Inserta un caracter al final de la lista.
+     * @param d caracter a insertar
+     */
     void insertarAlFinal(char d) {
         NodoCarga* nuevo = new NodoCarga{d, nullptr, cola};
         if (cola) {
@@ -25,6 +38,11 @@ public:
         cola = nuevo;
     }
 
+    /**
+     * @brief Imprime el mensaje actual por stdout.
+     *
+     * Metodo de depuracion usado para ver el estado despues de cada trama.
+     */
     void imprimirMensaje() {
         NodoCarga* temp = cabeza;
         std::cout << "\nMensaje actual: ";
@@ -45,12 +63,19 @@ public:
 };
 
 
+/**
+ * @struct NodoRotor
+ * @brief Nodo para representar una posicion del rotor 
+ */
 struct NodoRotor {
-    char letra;
+    char letra;          
     NodoRotor* siguiente;
-    NodoRotor* anterior;
-};
+    NodoRotor* anterior; 
 
+/**
+ * @class Rotomapeo
+ * @brief Modelo simple de un rotor que se puede rotar.
+ */
 class Rotomapeo {
 private:
     NodoRotor* cabeza;
@@ -68,6 +93,10 @@ public:
         previo->siguiente = cabeza;
     }
 
+    /**
+     * @brief Rota el rotor n posiciones 
+     * @param n desplazamiento en posiciones
+     */
     void rotar(int n) {
         if (!cabeza) return;
         if (n > 0) {
@@ -78,6 +107,11 @@ public:
         std::cout << "Rotor rotado " << n << " posiciones. Nueva cabeza: " << cabeza->letra << std::endl;
     }
 
+    /**
+     * @brief Obtiene la letra mapeada segun la entrada.
+     * @param in caracter de entrada 
+     * @return caracter mapeado en la posicion correspondiente
+     */
     char getMapeo(char in) {
         if (!cabeza) return in;
         if (in >= 'a' && in <= 'z') in = in - 'a' + 'A';
@@ -100,12 +134,20 @@ public:
     }
 };
 
+/**
+ * @class Trambase
+ * @brief Interfaz base para las tramas recibidas.
+  */
 class Trambase {
 public:
     virtual void procesar(Listacargada* carga, Rotomapeo* rotor) = 0;
     virtual ~Trambase() {}
 };
 
+/**
+ * @class Trama
+ * @brief Trama que lleva un caracter y lo decodifica con el rotor.
+ */
 class Trama : public Trambase {
 private:
     char dato;
@@ -118,7 +160,10 @@ public:
     }
 };
 
-
+/**
+ * @class Treapeomap
+ * @brief Trama que solo rota el rotor.
+ */
 class Treapeomap : public Trambase {
 private:
     int desplazamiento;

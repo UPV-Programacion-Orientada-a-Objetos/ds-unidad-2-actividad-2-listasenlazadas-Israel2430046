@@ -6,7 +6,10 @@
 
 class Listacargada;
 class Rotomapeo;
-
+/**
+ * @brief Interfaz base para las tramas recibidas.
+ *
+ */
 class Trambase {
 public:
     virtual void procesar(Listacargada* carga, Rotomapeo* rotor) = 0;

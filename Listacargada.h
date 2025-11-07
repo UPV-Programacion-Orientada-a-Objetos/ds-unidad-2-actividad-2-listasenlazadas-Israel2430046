@@ -3,20 +3,34 @@
 
 #include <iostream>
 
+/**
+ * @struct NodoCarga
+ * @brief Nodo simple para la lista que guarda un solo caracter.
+ */
 struct NodoCarga {
     char dato;
     NodoCarga* siguiente;
-    NodoCarga* anterior;
+    NodoCarga* anterior; 
 };
 
+/**
+ * @class Listacargada
+ * @brief Lista doblemente enlazada para ir acumulando el mensaje.
+ *
+ */
 class Listacargada {
 private:
-    NodoCarga* cabeza;
-    NodoCarga* cola;
+    NodoCarga* cabeza; 
+    NodoCarga* cola;  
 
 public:
+    /** @brief Crea la lista vacia */
     Listacargada() : cabeza(nullptr), cola(nullptr) {}
 
+    /**
+     * @brief Inserta un caracter al final de la lista.
+     * @param d caracter a insertar
+     */
     void insertarAlFinal(char d) {
         NodoCarga* nuevo = new NodoCarga{d, nullptr, cola};
         if (cola) {
@@ -27,6 +41,10 @@ public:
         cola = nuevo;
     }
 
+    /**
+     * @brief Imprime por stdout el mensaje actual construido.
+     *
+     */
     void imprimirMensaje() {
         NodoCarga* temp = cabeza;
         std::cout << "\nMensaje actual: ";
@@ -37,6 +55,9 @@ public:
         std::cout << std::endl;
     }
 
+    /**
+     * @brief Destructor: libera toda la memoria de los nodos.
+     */
     ~Listacargada() {
         while (cabeza) {
             NodoCarga* temp = cabeza;
